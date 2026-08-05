@@ -61,4 +61,35 @@ class KepalaBergetarProvider : MainAPI() {
             hasNext
         )
     }
+
+    override suspend fun load(url: String): LoadResponse {
+        val document = app.get(url).document
+
+        val title = document.selectFirst(
+            "h1.entry-title, h1.post-title, h1"
+        )?.text()?.trim()
+            ?: "KepalaBergetar"
+
+        val poster = document.selectFirst(
+            "meta[property=og:image]"
+        )?.attr("content")
+            ?: document.selectFirst("article img, .post img, img")?.attr("src")
+
+        val description = document.selectFirst(
+            "meta[property=og:description]"
+        )?.attr("content")
+            ?: document.selectFirst(
+                "article p, .entry-content p, .post-content p"
+            )?.text()?.trim()
+
+        return newMovieLoadResponse(
+            title,
+            url,
+            TvType.Movie,
+            url
+        ) {
+            this.posterUrl = poster
+            this.plot = description
+        }
+    }
 }
