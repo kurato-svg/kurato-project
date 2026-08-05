@@ -63,33 +63,63 @@ class KepalaBergetarProvider : MainAPI() {
     }
 
     override suspend fun load(url: String): LoadResponse {
-        val document = app.get(url).document
+    val document = app.get(url).document
 
-        val title = document.selectFirst(
-            "h1.entry-title, h1.post-title, h1"
+    val title = document.selectFirst(
+        "h1.entry-title, h1.post-title, h1"
+    )?.text()?.trim()
+        ?: "KepalaBergetar"
+
+    val poster = document.selectFirst(
+        "meta[property=og:image]"
+    )?.attr("content")
+        ?: document.selectFirst("article img, .post img, img")?.attr("src")
+
+    val description = document.selectFirst(
+        "meta[property=og:description]"
+    )?.attr("content")
+        ?: document.selectFirst(
+            "article p, .entry-content p, .post-content p"
         )?.text()?.trim()
-            ?: "KepalaBergetar"
 
-        val poster = document.selectFirst(
-            "meta[property=og:image]"
-        )?.attr("content")
-            ?: document.selectFirst("article img, .post img, img")?.attr("src")
+    val iframeUrl = document.selectFirst("iframe[src]")
+        ?.attr("src")
+        ?.trim()
 
-        val description = document.selectFirst(
-            "meta[property=og:description]"
-        )?.attr("content")
-            ?: document.selectFirst(
-                "article p, .entry-content p, .post-content p"
-            )?.text()?.trim()
+    return newMovieLoadResponse(
+        title,
+        url,
+        TvType.Movie,
+        url
+    ) {
+        this.posterUrl = poster
+        this.plot = description
 
-        return newMovieLoadResponse(
-            title,
-            url,
-            TvType.Movie,
-            url
-        ) {
-            this.posterUrl = poster
-            this.plot = description
+        if (!iframeUrl.isNullOrBlank()) {
+            addTrailer(iframeUrl)
         }
     }
-}
+    override suspend fun loadLinks(
+    data: String,
+    isCasting: Boolean,
+    subtitleCallback: (SubtitleFile) -> Unit,
+    callback: (ExtractorLink) -> Unit
+): Boolean {
+
+    val document = app.get(data).document
+
+    val iframeUrl = document.selectFirst("iframe[src]")
+        ?.attr("src")
+        ?.trim()
+        ?: return false
+
+    loadExtractor(
+        iframeUrl,
+        data,
+        subtitleCallback,
+        callback
+    )
+
+    return true
+    }
+    }
