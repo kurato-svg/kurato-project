@@ -28,6 +28,7 @@ class KepalaBergetarProvider : MainAPI() {
         page: Int,
         request: MainPageRequest
     ): HomePageResponse {
+
         val url = if (page == 1) {
             mainUrl
         } else {
@@ -63,63 +64,60 @@ class KepalaBergetarProvider : MainAPI() {
     }
 
     override suspend fun load(url: String): LoadResponse {
-    val document = app.get(url).document
 
-    val title = document.selectFirst(
-        "h1.entry-title, h1.post-title, h1"
-    )?.text()?.trim()
-        ?: "KepalaBergetar"
+        val document = app.get(url).document
 
-    val poster = document.selectFirst(
-        "meta[property=og:image]"
-    )?.attr("content")
-        ?: document.selectFirst("article img, .post img, img")?.attr("src")
-
-    val description = document.selectFirst(
-        "meta[property=og:description]"
-    )?.attr("content")
-        ?: document.selectFirst(
-            "article p, .entry-content p, .post-content p"
+        val title = document.selectFirst(
+            "h1.entry-title, h1.post-title, h1"
         )?.text()?.trim()
+            ?: "KepalaBergetar"
 
-    val iframeUrl = document.selectFirst("iframe[src]")
-        ?.attr("src")
-        ?.trim()
+        val poster = document.selectFirst(
+            "meta[property=og:image]"
+        )?.attr("content")
+            ?: document.selectFirst(
+                "article img, .post img, img"
+            )?.attr("src")
 
-    return newMovieLoadResponse(
-        title,
-        url,
-        TvType.Movie,
-        url
-    ) {
-        this.posterUrl = poster
-        this.plot = description
+        val description = document.selectFirst(
+            "meta[property=og:description]"
+        )?.attr("content")
+            ?: document.selectFirst(
+                "article p, .entry-content p, .post-content p"
+            )?.text()?.trim()
 
-        if (!iframeUrl.isNullOrBlank()) {
-            addTrailer(iframeUrl)
+        return newMovieLoadResponse(
+            title,
+            url,
+            TvType.Movie,
+            url
+        ) {
+            this.posterUrl = poster
+            this.plot = description
         }
     }
+
     override suspend fun loadLinks(
-    data: String,
-    isCasting: Boolean,
-    subtitleCallback: (SubtitleFile) -> Unit,
-    callback: (ExtractorLink) -> Unit
-): Boolean {
+        data: String,
+        isCasting: Boolean,
+        subtitleCallback: (SubtitleFile) -> Unit,
+        callback: (ExtractorLink) -> Unit
+    ): Boolean {
 
-    val document = app.get(data).document
+        val document = app.get(data).document
 
-    val iframeUrl = document.selectFirst("iframe[src]")
-        ?.attr("src")
-        ?.trim()
-        ?: return false
+        val iframeUrl = document.selectFirst("iframe[src]")
+            ?.attr("src")
+            ?.trim()
+            ?: return false
 
-    loadExtractor(
-        iframeUrl,
-        data,
-        subtitleCallback,
-        callback
-    )
+        loadExtractor(
+            iframeUrl,
+            data,
+            subtitleCallback,
+            callback
+        )
 
-    return true
+        return true
     }
-    }
+}
