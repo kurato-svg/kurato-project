@@ -1,0 +1,106 @@
+[
+    {
+        "url": "https://raw.githubusercontent.com/kurato-svg/kurato-project/builds/AnichinProvider.cs3",
+        "status": 1,
+        "version": 2,
+        "name": "AnichinProvider",
+        "internalName": "AnichinProvider",
+        "authors": [
+            "Luckez"
+        ],
+        "description": "Anichin \u2014 Streaming Donghua Subtitle Indonesia",
+        "fileSize": 22125,
+        "repositoryUrl": "https://github.com/kurato-svg/kurato-project",
+        "language": "id",
+        "tvTypes": [
+            "Anime",
+            "AnimeMovie",
+            "Cartoon"
+        ],
+        "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://anichin.club&size=%size%",
+        "apiVersion": 1,
+        "fileHash": "sha256-44f8a69e48cf1992fd234a7f59c612f25b7dd429b5a3fb8552df427810370b5d"
+    },
+    {
+        "url": "https://raw.githubusercontent.com/kurato-svg/kurato-project/builds/FunmovieslixProvider.cs3",
+        "status": 1,
+        "version": 1,
+        "name": "FunmovieslixProvider",
+        "internalName": "FunmovieslixProvider",
+        "authors": [
+            "Luckez"
+        ],
+        "description": "Indonesia Source",
+        "fileSize": 15911,
+        "repositoryUrl": "https://github.com/kurato-svg/kurato-project",
+        "language": "id",
+        "tvTypes": [
+            "Movie",
+            "TvSeries"
+        ],
+        "iconUrl": "https://raw.githubusercontent.com/phisher98/TVVVV/refs/heads/main/Funmovieslix.png",
+        "apiVersion": 1,
+        "fileHash": "sha256-9b454736753f9a504d89e295cd0d017acbe5a791ab76cb20490632177a4753c6"
+    },
+    {
+        "url": "https://raw.githubusercontent.com/kurato-svg/kurato-project/builds/KepalaBergetarProvider.cs3",
+        "status": 3,
+        "version": 1,
+        "name": "KepalaBergetarProvider",
+        "internalName": "KepalaBergetarProvider",
+        "authors": [
+            "Luckez"
+        ],
+        "description": "KepalaBergetar \u2014 Drama Melayu",
+        "fileSize": 8063,
+        "repositoryUrl": "https://github.com/kurato-svg/kurato-project",
+        "language": "ms",
+        "tvTypes": [
+            "TvSeries",
+            "Movie"
+        ],
+        "iconUrl": "https://kepalabergetar9.pro/favicon.ico",
+        "apiVersion": 1,
+        "fileHash": "sha256-547e6c510f0c84b11d0d8510ff316b32e454ea4331d75db87013acd902db9a17"
+    },
+    {
+        "url": "https://raw.githubusercontent.com/kurato-svg/kurato-project/builds/KissKHProvider.cs3",
+        "status": 1,
+        "version": 5,
+        "name": "KissKHProvider",
+        "internalName": "KissKHProvider",
+        "authors": [
+            "Luckez"
+        ],
+        "description": "Watch drama online in high quality. Free download high quality drama. Various formats from 240p to 720p HD (or even 1080p). Feel Free To Watch!",
+        "fileSize": 33980,
+        "repositoryUrl": "https://github.com/kurato-svg/kurato-project",
+        "language": "en",
+        "tvTypes": [
+            "AsianDrama"
+        ],
+        "iconUrl": "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://kisskh.id/&size=256",
+        "apiVersion": 1,
+        "fileHash": "sha256-0f1982d2314daa936d4a71f072a4380559219f703d57fc0fbe9c22bdb5ce61f1"
+    },
+    {
+        "url": "https://raw.githubusercontent.com/kurato-svg/kurato-project/builds/PencurimovieProvider.cs3",
+        "status": 1,
+        "version": 1,
+        "name": "PencurimovieProvider",
+        "internalName": "PencurimovieProvider",
+        "authors": [
+            "Luckez"
+        ],
+        "description": "PencuriMovie \u2014 Streaming Film & Serial",
+        "fileSize": 17703,
+        "repositoryUrl": "https://github.com/kurato-svg/kurato-project",
+        "language": "ms",
+        "tvTypes": [
+            "Movie",
+            "TvSeries"
+        ],
+        "apiVersion": 1,
+        "fileHash": "sha256-2d3c1c45bff7ea85e41391c3e8d2f16a97b510924d5035dcf580e45b60184534"
+    }
+]
