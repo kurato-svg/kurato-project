@@ -1,0 +1,8 @@
+{
+    "name": "Kurato Repo",
+    "description": "Kurato CloudStream Extensions",
+    "manifestVersion": 1,
+    "pluginLists": [
+        "https://raw.githubusercontent.com/kurato-svg/kurato-project/builds/plugins.json"
+    ]
+}
