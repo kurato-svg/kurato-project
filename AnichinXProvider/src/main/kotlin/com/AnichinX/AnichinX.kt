@@ -8,7 +8,7 @@ import org.jsoup.nodes.Element
 class AnichinX : MainAPI() {
 
     override var mainUrl = "https://anichin.moe"
-    override var name = "Anichin V2"
+    override var name = "Anichin X"
     override val hasMainPage = true
     override var lang = "id"
     override val hasDownloadSupport = true
