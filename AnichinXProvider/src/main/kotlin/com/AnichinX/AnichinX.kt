@@ -49,17 +49,17 @@ class AnichinX : MainAPI() {
         )
     }
 
-    private fun Element.toSearchResult(): SearchResponse {
+    private fun Element.toSearchResult(): SearchResponse? {
 
         val title = this
             .select("div.bsx > a")
             .attr("title")
             .trim()
 
-        val href = fixUrl(
+        val href = fixUrlNull(
             this.select("div.bsx > a")
                 .attr("href")
-        )
+        ) ?: return null
 
         val posterUrl = fixUrlNull(
             this.select("div.bsx > a img")
@@ -113,7 +113,7 @@ class AnichinX : MainAPI() {
             .selectFirst("h1.entry-title")
             ?.text()
             ?.trim()
-            .toString()
+            .orEmpty()
 
         var poster = document
             .select("div.ime > img")
@@ -147,13 +147,13 @@ class AnichinX : MainAPI() {
 
             val episodes = document
                 .select(".eplister li")
-                .map { ep ->
+                .mapIndexedNotNull { index, ep ->
 
-                    val link = fixUrl(
+                    val link = fixUrlNull(
                         ep.selectFirst("a")
                             ?.attr("href")
                             .orEmpty()
-                    )
+                    ) ?: return@mapIndexedNotNull null
 
                     val epTitle = ep
                         .selectFirst(".epl-title")
@@ -187,19 +187,21 @@ class AnichinX : MainAPI() {
                         )
                         .trim()
 
-                    val name =
-                        "— $cleanTitle $epSub Indonesia"
-                            .trim()
+                    val name = if (cleanTitle.isNotBlank()) {
+                        "$cleanTitle $epSub Indonesia".trim()
+                    } else {
+                        "Episode ${index + 1}"
+                    }
 
-                    val desc =
-                        if (epDate.isNotEmpty()) {
-                            "Rilis: $epDate"
-                        } else {
-                            null
-                        }
+                    val desc = if (epDate.isNotEmpty()) {
+                        "Rilis: $epDate"
+                    } else {
+                        null
+                    }
 
                     newEpisode(link) {
                         this.name = name
+                        this.episode = index + 1
                         this.posterUrl = fixUrlNull(poster)
                         this.description = desc
                     }
@@ -218,12 +220,11 @@ class AnichinX : MainAPI() {
 
         } else {
 
-            val movieHref =
-                document
-                    .selectFirst(".eplister li > a")
-                    ?.attr("href")
-                    ?.let { fixUrl(it) }
-                    ?: url
+            val movieHref = document
+                .selectFirst(".eplister li > a")
+                ?.attr("href")
+                ?.let { fixUrl(it) }
+                ?: url
 
             newMovieLoadResponse(
                 title,
@@ -238,65 +239,61 @@ class AnichinX : MainAPI() {
     }
 
     override suspend fun loadLinks(
-    data: String,
-    isCasting: Boolean,
-    subtitleCallback: (SubtitleFile) -> Unit,
-    callback: (ExtractorLink) -> Unit
-): Boolean {
+        data: String,
+        isCasting: Boolean,
+        subtitleCallback: (SubtitleFile) -> Unit,
+        callback: (ExtractorLink) -> Unit
+    ): Boolean {
 
-    val document = app.get(
-        fixUrl(data)
-    ).document
+        val document = app.get(
+            fixUrl(data)
+        ).document
 
-    document.select(".mobius option").forEach { server ->
+        document.select(".mobius option").forEach { server ->
 
-        val base64 = server.attr("value")
+            val base64 = server.attr("value")
 
-        if (base64.isNotBlank()) {
+            if (base64.isNotBlank()) {
 
-            val decoded = base64Decode(base64)
-            val doc = Jsoup.parse(decoded)
+                val decoded = base64Decode(base64)
+                val doc = Jsoup.parse(decoded)
 
-            val iframe = doc
-                .select("iframe")
-                .attr("src")
-                .trim()
+                val iframe = doc
+                    .select("iframe")
+                    .attr("src")
+                    .trim()
 
-            if (iframe.isNotBlank()) {
+                if (iframe.isNotBlank()) {
 
-                val streamUrl = fixUrl(iframe)
+                    val streamUrl = fixUrl(iframe)
 
-                println("ANICHIN V2 STREAM URL:")
-                println(streamUrl)
+                    val streamResponse = app.get(
+                        streamUrl,
+                        headers = mapOf(
+                            "Referer" to fixUrl(data),
+                            "Origin" to mainUrl,
+                            "User-Agent" to USER_AGENT
+                        )
+                    )
 
-                val streamResponse = app.get(
-    streamUrl,
-    headers = mapOf(
-        "Referer" to fixUrl(data),
-        "Origin" to mainUrl,
-        "User-Agent" to USER_AGENT
-    )
-)
+                    val playerUrl = streamResponse.document
+                        .selectFirst("iframe")
+                        ?.attr("src")
+                        ?.trim()
 
-val playerUrl = streamResponse.document
-    .selectFirst("iframe")
-    ?.attr("src")
-    ?.trim()
+                    if (!playerUrl.isNullOrBlank()) {
 
-if (!playerUrl.isNullOrBlank()) {
-
-    println("ANICHIN V2 PLAYER URL:")
-    println(playerUrl)
-
-    loadExtractor(
-        playerUrl,
-        streamUrl,
-        subtitleCallback,
-        callback
-    )
-}
+                        loadExtractor(
+                            playerUrl,
+                            streamUrl,
+                            subtitleCallback,
+                            callback
+                        )
+                    }
+                }
+            }
         }
-    }
 
-    return true
+        return true
+    }
 }
