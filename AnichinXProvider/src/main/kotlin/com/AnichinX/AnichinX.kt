@@ -5,7 +5,7 @@ import com.lagradost.cloudstream3.utils.*
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Element
 
-class AnichinV2 : MainAPI() {
+class AnichinX : MainAPI() {
 
     override var mainUrl = "https://anichin.moe"
     override var name = "Anichin V2"
