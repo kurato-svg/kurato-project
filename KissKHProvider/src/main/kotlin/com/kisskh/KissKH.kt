@@ -230,8 +230,11 @@ class KissKH : MainAPI() {
                                             url = fixUrl(link),
                                             INFER_TYPE
                                         ) {
-                                            referer = mainUrl
                                             quality = inferQuality(link)
+                                            headers = mapOf(
+                                                "Referer" to "$mainUrl/",
+                                                "Origin" to mainUrl
+                                            )
                                         }
                                     )
                                     streamFound = true
