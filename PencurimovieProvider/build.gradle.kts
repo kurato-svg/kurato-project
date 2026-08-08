@@ -1,7 +1,7 @@
 version = 1
 
 cloudstream {
-    description = "Pencurimovie — Streaming Film & Serial"
+    description = "PencuriMovie — Streaming Film & Serial"
     language    = "ms"
     authors     = listOf("Luckez")
     status = 1
