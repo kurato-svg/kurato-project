@@ -1,6 +1,6 @@
 // ! Bu araç @ByAyzen tarafından | @cs-karma için yazılmıştır.
 
-package com.byayzen
+package com.kisskh
 
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.lagradost.api.Log
