@@ -1,5 +1,3 @@
-// ! Bu araç @ByAyzen tarafından | @cs-karma için yazılmıştır.
-
 package com.kisskh
 
 import com.fasterxml.jackson.annotation.JsonProperty
