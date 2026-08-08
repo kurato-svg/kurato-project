@@ -3,7 +3,7 @@ version = 1
 cloudstream {
     description = "KepalaBergetar — Drama Melayu"
     language = "ms"
-    authors = listOf("Kurato")
+    authors = listOf("Luckez")
 
     status = 3
 
