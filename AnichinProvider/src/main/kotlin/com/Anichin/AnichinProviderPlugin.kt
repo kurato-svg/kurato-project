@@ -1,14 +1,14 @@
-package com.AnichinV2
+package com.Anichin
 
 import android.content.Context
 import com.lagradost.cloudstream3.plugins.CloudstreamPlugin
 import com.lagradost.cloudstream3.plugins.Plugin
 
 @CloudstreamPlugin
-class AnichinV2ProviderPlugin : Plugin() {
+class AnichinProviderPlugin : Plugin() {
 
     override fun load(context: Context) {
-        registerMainAPI(AnichinV2())
+        registerMainAPI(Anichin())
         registerExtractorAPI(Dailymotion())
         registerExtractorAPI(Geodailymotion())
         registerExtractorAPI(Odnoklassniki())
