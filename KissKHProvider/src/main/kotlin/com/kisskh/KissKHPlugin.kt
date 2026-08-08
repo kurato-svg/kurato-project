@@ -1,4 +1,3 @@
-// ! Bu araç @ByAyzen tarafından | @kekikanime için yazılmıştır.
 package kisskh
 
 import com.lagradost.cloudstream3.plugins.CloudstreamPlugin
