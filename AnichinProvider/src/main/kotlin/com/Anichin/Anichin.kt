@@ -1,4 +1,4 @@
-package com.AnichinV2
+package com.Anichin
 
 import com.lagradost.cloudstream3.*
 import com.lagradost.cloudstream3.utils.*
@@ -6,10 +6,10 @@ import org.jsoup.Jsoup
 import org.jsoup.nodes.Element
 import java.net.URLEncoder
 
-class AnichinV2 : MainAPI() {
+class Anichin : MainAPI() {
 
     override var mainUrl = "https://anichin.moe"
-    override var name = "Anichin V2"
+    override var name = "Anichin X"
     override val hasMainPage = true
     override var lang = "id"
     override val hasDownloadSupport = true
